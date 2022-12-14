@@ -10,51 +10,51 @@ namespace prjBMI.Services
     public class GetBMIService
     {
         //產生物種和性別的選項並判斷格式是否正確的方法
-        public static void IsCorrectedSpeciesAndGenderFormat<T>(string query, out int number)
+        public static int IsCorrectedSpeciesAndGenderFormat<T>(string query)
         {
             int count = 0;
+            string[] enumNames = Enum.GetNames(typeof(T));
             string queryString = $"請選擇你的{query}(";
-            foreach (string enumName in Enum.GetNames(typeof(T)))
+            foreach (string enumName in enumNames)
             {
                 count++;
                 queryString += $"{count}: {enumName}, ";
             }
             queryString = queryString.Trim(new Char[] { ',', ' ' });
             queryString += "):";
-            bool isCorrectedFormat = false;
-            number = 0;
+            int number = 0;
             bool isInRange = false;
-            do
+            while (!isInRange)
             {
-                isInRange = false;
                 Console.WriteLine(queryString);
-                isCorrectedFormat = Int32.TryParse(Console.ReadLine(), out number);
+                bool isCorrectedFormat = Int32.TryParse(Console.ReadLine(), out number);
                 if (isCorrectedFormat)
                 {
-                    if (number > 0 && number <= count)
+                    if (number > 0 && number <= enumNames.Length)
                     {
                         isInRange = true;
                     }
                 }
             }
-            while (!isInRange);
+            return number;
         }
         //判斷身高和體重個輸入格式是否為正數數字的方法
-        public static void IsCorrectedWeightAndHeightFormat(string query, out double number)
+        public static double IsCorrectedWeightAndHeightFormat(string query)
         {
             bool isCorrectedFormat = false;
-            int count = 0;
-            do
+            bool isFirst = true;
+            double number = 0;
+            while (!isCorrectedFormat)
             {
-                if (count != 0)
+                if (!isFirst)
                 {
                     Console.WriteLine("請輸入正數數字\n");
                 }
                 Console.WriteLine(query);
                 isCorrectedFormat = (double.TryParse(Console.ReadLine(), out number) && number > 0);
-                count++;
+                isFirst = false;
             }
-            while (!isCorrectedFormat);
+            return number;
         }
         //提供所有物種+性別的組合
         public static BMIAndResult GetSpecies(string speciesGenderName, double weight, double height)
