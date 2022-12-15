@@ -8,7 +8,7 @@ namespace prjBMI.Models
 {
     public class DogFemale : Dog
     {
-        public double minBMIValue = 18;
-        public double maxBMIValue = 22;
+        public override double minBMIValue { get; set; } = 18;
+        public override double maxBMIValue { get; set; } = 22;
     }
 }

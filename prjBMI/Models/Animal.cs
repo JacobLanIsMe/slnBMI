@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace prjBMI.Models
 {
-    public abstract class Animal
+    public class Animal
     {
         public double Weight { get; set; }
         public double Height { get; set; }
-        public abstract double GetBMI(double weight, double height);
+        public virtual double minBMIValue { get; set; }
+        public virtual double maxBMIValue { get; set; }
+        public virtual double GetBMI(double weight, double height) { return 0; }
         public string GetResult(double bmi, double minBMIValue, double maxBMIValue)
         {
             if (bmi > maxBMIValue)
