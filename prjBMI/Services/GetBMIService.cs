@@ -10,7 +10,7 @@ namespace prjBMI.Services
     public class GetBMIService
     {
         //產生物種和性別的選項並判斷格式是否正確的方法
-        public static int IsCorrectedSpeciesAndGenderFormat<T>(string query)
+        public static int GetUserSpeciesOrGender<T>(string query)
         {
             int count = 0;
             string[] enumNames = Enum.GetNames(typeof(T));
@@ -39,7 +39,7 @@ namespace prjBMI.Services
             return number;
         }
         //判斷身高和體重個輸入格式是否為正數數字的方法
-        public static double IsCorrectedWeightAndHeightFormat(string query)
+        public static double GetUserWeightOrHeight(string query)
         {
             bool isCorrectedFormat = false;
             bool isFirst = true;
@@ -59,51 +59,37 @@ namespace prjBMI.Services
         //提供所有物種+性別的組合
         public static BMIAndResult GetSpecies(string speciesGenderName, double weight, double height)
         {
-            double bmi = 0;
-            string result = "";
+            
+            Animal animal = null;
             switch (speciesGenderName)
             {
                 case "ChickenMale":
-                    ChickenMale chickenMale = new ChickenMale();
-                    bmi = chickenMale.GetBMI(weight, height);
-                    result = chickenMale.GetResult(bmi, chickenMale.minBMIValue, chickenMale.maxBMIValue);
+                    animal = new ChickenMale();
                     break;
                 case "ChickenFemale":
-                    ChickenFemale chickenFemale = new ChickenFemale();
-                    bmi = chickenFemale.GetBMI(weight, height);
-                    result = chickenFemale.GetResult(bmi, chickenFemale.minBMIValue, chickenFemale.maxBMIValue);
+                    animal = new ChickenFemale();
                     break;
                 case "DogMale":
-                    DogMale dogMale = new DogMale();
-                    bmi = dogMale.GetBMI(weight, height);
-                    result = dogMale.GetResult(bmi, dogMale.minBMIValue, dogMale.maxBMIValue);
+                    animal = new DogMale();
                     break;
                 case "DogFemale":
-                    DogFemale dogFemale = new DogFemale();
-                    bmi = dogFemale.GetBMI(weight, height);
-                    result = dogFemale.GetResult(bmi, dogFemale.minBMIValue, dogFemale.maxBMIValue);
+                    animal = new DogFemale();
                     break;
                 case "PigMale":
-                    PigMale pigMale = new PigMale();
-                    bmi = pigMale.GetBMI(weight, height);
-                    result = pigMale.GetResult(bmi, pigMale.minBMIValue, pigMale.maxBMIValue);
+                    animal = new PigMale();
                     break;
                 case "PigFemale":
-                    PigFemale pigFemale = new PigFemale();
-                    bmi = pigFemale.GetBMI(weight, height);
-                    result = pigFemale.GetResult(bmi, pigFemale.minBMIValue, pigFemale.maxBMIValue);
+                    animal = new PigFemale();
                     break;
                 case "HumanMale":
-                    HumanMale humanMale = new HumanMale();
-                    bmi = humanMale.GetBMI(weight, height);
-                    result = humanMale.GetResult(bmi, humanMale.minBMIValue, humanMale.maxBMIValue);
+                    animal = new HumanMale();
                     break;
                 case "HumanFemale":
-                    HumanFemale humanFemale = new HumanFemale();
-                    bmi = humanFemale.GetBMI(weight, height);
-                    result = humanFemale.GetResult(bmi, humanFemale.minBMIValue, humanFemale.maxBMIValue);
+                    animal = new HumanFemale();
                     break;
             }
+            double bmi = animal.GetBMI(weight,height);
+            string result = animal.GetResult(bmi, animal.minBMIValue, animal.maxBMIValue);
             BMIAndResult bMIAndResult = new BMIAndResult()
             {
                 BMI = bmi,

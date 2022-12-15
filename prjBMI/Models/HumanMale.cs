@@ -8,7 +8,7 @@ namespace prjBMI.Models
 {
     public class HumanMale : Human
     {
-        public double minBMIValue = 20;
-        public double maxBMIValue = 25;
+        public override double minBMIValue { get; set; } = 20;
+        public override double maxBMIValue { get; set; } = 25;
     }
 }
